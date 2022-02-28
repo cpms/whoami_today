@@ -8,11 +8,16 @@ sv = hoshino.Service('今天是什么少女')
 
 @sv.on_fullmatch('今天是什么少女')
 @sv.on_fullmatch('今日是什么少女')
+@sv.on_fullmatch('我今天是什么少女')
+@sv.on_fullmatch('我今日是什么少女')
+@sv.on_fullmatch('今天我是什么少女')
+@sv.on_fullmatch('今日我是什么少女')
 async def today(bot, ev):
     user_id = ev.user_id
     msg = f'二次元少女的[CQ:at,qq={ev.user_id}]，长着{get_random(user_id,"kao")}，身高{get_random(user_id,"shinnchou")}，\
 {get_random(user_id,"kamiiro")}色{get_random(user_id,"kami")}，{get_random(user_id,"cup")}，瞳孔{get_random(user_id,"hitomiiro")}色，\
 {get_random(user_id,"zokusei1")}和{get_random(user_id,"zokusei2")}属性，是{get_random(user_id,"shokugyou")}'
+    sv.logger.info(msg)
     await bot.send(ev, msg)
 
 
@@ -58,7 +63,7 @@ def get_random(user_id,today_type):
         up = len(today_data.shokugyou) + 500
         result = today_data.shokugyou[rnd.randint(down,up)]
     elif today_type == 'shinnchou':
-        down = 100
+        down = 140
         up = 180
         result = str(rnd.randint(down,up))
     return result
