@@ -1,6 +1,7 @@
 import hoshino
 import random
 import asyncio
+import hashlib
 from . import today_data
 from datetime import date
 
@@ -23,7 +24,7 @@ async def today(bot, ev):
 
 def get_random(user_id,today_type):
     rnd = random.Random()
-    myseed = int(date.today().strftime("%y%m%d")) + int(user_id)
+    myseed = hashlib.sha256((str(date.today().strftime("%y%m%d")) + str(user_id)).encode(encoding='UTF-8')).hexdigest()
     rnd.seed(myseed)
     
     if today_type == 'kao':
@@ -33,8 +34,6 @@ def get_random(user_id,today_type):
     elif today_type == 'kamiiro':
         down = 301
         up = len(today_data.iro) + 300
-        myseed += 1
-        rnd.seed(myseed)
         result = today_data.iro[rnd.randint(down,up)]
     elif today_type == 'kami':
         down = 101
@@ -47,6 +46,7 @@ def get_random(user_id,today_type):
     elif today_type == 'hitomiiro':
         down = 301
         up = len(today_data.iro) + 300
+        rnd.randint(down,up)
         result = today_data.iro[rnd.randint(down,up)]
     elif today_type == 'zokusei1':
         down = 401
@@ -55,8 +55,7 @@ def get_random(user_id,today_type):
     elif today_type == 'zokusei2':
         down = 401
         up = len(today_data.zokusei) + 400
-        myseed += 1
-        rnd.seed(myseed)
+        rnd.randint(down,up)
         result = today_data.zokusei[rnd.randint(down,up)]
     elif today_type == 'shokugyou':
         down = 501
